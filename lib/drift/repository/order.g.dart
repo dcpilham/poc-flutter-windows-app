@@ -3,6 +3,6 @@
 part of 'order.dart';
 
 // ignore_for_file: type=lint
-mixin _$OrdersRepositoryMixin on DatabaseAccessor<AppDatabase> {
+mixin _$OrderRepositoryMixin on DatabaseAccessor<AppDatabase> {
   $OrdersTable get orders => attachedDatabase.orders;
 }

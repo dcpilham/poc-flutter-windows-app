@@ -1,12 +1,13 @@
 import 'package:drift/drift.dart';
 import 'package:flutter_desktop_app/drift/database.dart';
+import 'package:flutter_desktop_app/drift/entity/order.dart';
 
 part 'order.g.dart';
 
 @DriftAccessor(tables: [Orders])
-class OrdersRepository extends DatabaseAccessor<AppDatabase> with _$OrdersRepositoryMixin {
+class OrderRepository extends DatabaseAccessor<AppDatabase> with _$OrderRepositoryMixin {
 
-  OrdersRepository(super.db);
+  OrderRepository(super.db);
   
   Future<List<Order>> getAll() async {
     return customSelect("select * from orders", readsFrom: {orders})

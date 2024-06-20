@@ -3,32 +3,17 @@ import 'dart:io';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_desktop_app/drift/migration/migration_v2.dart';
+import 'package:flutter_desktop_app/drift/entity/order.dart';
+import 'package:flutter_desktop_app/drift/entity/product.dart';
+import 'package:flutter_desktop_app/drift/migration/orders_add_created_at_column.dart';
 import 'package:flutter_desktop_app/drift/repository/order.dart';
-import 'package:flutter_desktop_app/drift/repository/order_item.dart';
+import 'package:flutter_desktop_app/drift/repository/order_product.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-@DataClassName("Order")
-class Orders extends Table {
-  Column<int> get id => integer().autoIncrement()();
-  Column<String> get customer => text()();
-  Column<double> get total => real()();
-  Column<DateTime> get createdAt => dateTime().withDefault(currentDateAndTime)();
-}
-
-@DataClassName("OrderItem")
-class OrderItems extends Table {
-  Column<int> get id => integer().autoIncrement()();
-  Column<String> get name => text()();
-  Column<int> get quantity => integer()();
-  Column<double> get price => real()();
-  Column<int> get orderId => integer().references(Orders, #id)();
-}
-
-@DriftDatabase(tables: [Orders, OrderItems], daos: [OrdersRepository, OrderItemsRepository])
+@DriftDatabase(tables: [Orders, OrderProducts, Products], daos: [OrderRepository, OrderProductRepository])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
@@ -40,6 +25,7 @@ class AppDatabase extends _$AppDatabase {
     return MigrationStrategy(
       onCreate: (Migrator m) async {
         await m.createAll();
+        //await initData(products);
       },
       onUpgrade: (m, from, to) async {
         await customStatement("pragma foreign_keys=off");
