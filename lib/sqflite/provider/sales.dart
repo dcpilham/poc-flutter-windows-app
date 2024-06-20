@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_desktop_app/plain_sqlite/dto/sales.dart';
+import 'package:flutter_desktop_app/sqflite/dto/sales.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
 

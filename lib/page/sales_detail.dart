@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_desktop_app/plain_sqlite/dto/sales.dart';
+import 'package:flutter_desktop_app/sqflite/dto/sales.dart';
 
 
 class SalesDetailPageArguments {
