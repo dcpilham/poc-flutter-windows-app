@@ -12,8 +12,8 @@ class SalesDetailPage extends StatelessWidget {
   static const routeName = 'SalesDetailPage';
   Sales? sales;
 
-  SalesDetailPage(SalesDetailPageArguments args) {
-    this.sales = args.sales;
+  SalesDetailPage(SalesDetailPageArguments args, {super.key}) {
+    sales = args.sales;
   }
 
   @override

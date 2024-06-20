@@ -6,7 +6,7 @@ part 'order.g.dart';
 @DriftAccessor(tables: [Orders])
 class OrdersRepository extends DatabaseAccessor<AppDatabase> with _$OrdersRepositoryMixin {
 
-  OrdersRepository(AppDatabase db) : super(db);
+  OrdersRepository(super.db);
   
   Future<List<Order>> getAll() async {
     return customSelect("select * from orders", readsFrom: {orders})

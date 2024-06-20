@@ -1,10 +1,7 @@
-import 'package:drift/drift.dart' as d;
 import 'package:flutter/material.dart';
 import 'package:flutter_desktop_app/drift/database.dart';
-import 'package:flutter_desktop_app/plain_sqlite/dto/sales.dart';
-import 'package:flutter_desktop_app/plain_sqlite/migration/migration.dart';
+import 'package:flutter_desktop_app/sqflite/migration/migration.dart';
 import 'package:flutter_desktop_app/page/sales_detail.dart';
-import 'package:flutter_desktop_app/plain_sqlite/provider/sales.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 
@@ -75,7 +72,7 @@ class MyApp extends StatelessWidget {
           case MyHomePage.routeName:
             return MaterialPageRoute(
                 settings: settings,
-                builder: (context) => MyHomePage(
+                builder: (context) => const MyHomePage(
                       title: "Segari POS",
                     ));
           case SalesDetailPage.routeName:
@@ -84,6 +81,7 @@ class MyApp extends StatelessWidget {
                 builder: (context) => SalesDetailPage(
                     settings.arguments as SalesDetailPageArguments));
         }
+        return null;
       },
     );
   }
@@ -109,10 +107,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  TextEditingController _customerNameController = new TextEditingController();
-  TextEditingController _itemController = new TextEditingController();
-  TextEditingController _quantityController = new TextEditingController();
-  TextEditingController _priceController = new TextEditingController();
+  final TextEditingController _customerNameController = TextEditingController();
+  final TextEditingController _itemController = TextEditingController();
+  final TextEditingController _quantityController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
   //List<SalesItem> items = [];
   List<OrderItem> items = [];
   List<Order> salesHistory = [];
@@ -293,13 +291,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
                     TextButton(
                       onPressed: _addItem,
-                      style: TextButton.styleFrom(padding: EdgeInsets.all(8)),
-                      child: Text("Add Item"),
+                      style: TextButton.styleFrom(padding: const EdgeInsets.all(8)),
+                      child: const Text("Add Item"),
                     ),
                     TextButton(
                       onPressed: _insertToDb,
-                      style: TextButton.styleFrom(padding: EdgeInsets.all(8)),
-                      child: Text("End Sales"),
+                      style: TextButton.styleFrom(padding: const EdgeInsets.all(8)),
+                      child: const Text("End Sales"),
                     ),
                   ],
                 )
@@ -316,11 +314,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Column(
                         children: [
-                          Text(items[int].name!),
+                          Text(items[int].name),
                           Text("${items[int].quantity}x ${items[int].price}"),
                         ],
                       ),
-                      Text("${items[int].quantity! * items[int].price!}"),
+                      Text("${items[int].quantity * items[int].price}"),
                     ]);
               },
             ),
@@ -337,12 +335,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     // using sqflite
     if (salesHistory.isEmpty) {
-      return CircularProgressIndicator();
+      return const CircularProgressIndicator();
     } else {
       return ListView.builder(
         itemCount: salesHistory.length,
         itemBuilder: (context, int) {
-          final salesElement = salesHistory[int] as Order;
+          final salesElement = salesHistory[int];
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
